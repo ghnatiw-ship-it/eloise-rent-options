@@ -129,7 +129,6 @@ footer { color: var(--muted); font-size: 12.5px; max-width: 80ch; }
       "Sales for 10%" is the sales Eloise needs for rent to be 10% of sales.</p>
   </header>
 
-  <div class="facts" id="facts"></div>
   <div class="shapebar"><span>Ramp shape for the free-month offers</span><div class="tabs" id="shape"></div></div>
 
   <!-- Layout 1 -->
@@ -265,7 +264,7 @@ const SHAPES = [{ id: "straight", name: "Straight-line ramp" }, { id: "blended",
 function drawShape() {
   tabs($("shape"), SHAPES, SHAPE, id => { SHAPE = id; try { localStorage.setItem("rent-shape", id); } catch {} compute(); drawAll(); });
 }
-function drawAll() { drawFacts(); drawShape(); draw1(); draw2(); draw3(); }
+function drawAll() { drawShape(); draw1(); draw2(); draw3(); }
 
 function tabs(el, items, active, onPick, multi) {
   const btn = it => `<button class="tab" id="${el.id}-${it.id}" style="--c:var(${it.c || "--accent"})" aria-pressed="${multi ? active.has(it.id) : it.id === active}">${it.c ? '<span class="dot"></span>' : ""}${it.name}${it.isNew ? NEW : ""}</button>`;
