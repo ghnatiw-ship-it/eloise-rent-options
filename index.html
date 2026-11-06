@@ -96,6 +96,15 @@ tr.total td { font-weight: 700; border-top: 2px solid var(--ink2); border-bottom
 }
 .shapebar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
 .samenote { flex: 1 1 100%; margin: 0 0 4px; font-family: var(--f-display); font-size: clamp(18px, 2.6vw, 22px); line-height: 1.3; color: var(--accent); text-wrap: balance; }
+.shapepick { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.shapelabel { font-weight: 700; font-size: 15px; color: var(--ink); }
+#shape .tabrow { background: var(--soft); border: 2px solid var(--accent); border-radius: 999px; padding: 4px; gap: 4px; }
+#shape .tab { font-size: 15px; padding: 10px 20px; border: none; background: transparent; color: var(--ink2); box-shadow: none; }
+#shape .tab:hover { color: var(--ink); background: var(--panel); }
+#shape .tab[aria-pressed="true"] { background: var(--accent); color: var(--panel); box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 40%, transparent); }
+#shape .tab[aria-pressed="true"]::before { content: "✓ "; }
+.shapehelp { flex: 1 1 100%; margin: 2px 0 0; font-size: 13.5px; color: var(--ink2); }
+.shapebar { border: 2px solid color-mix(in srgb, var(--accent) 35%, var(--line)); }
 .shapebar > span { font-weight: 600; font-size: 13.5px; color: var(--ink2); }
 .selhead { border-left: 5px solid var(--c); background: color-mix(in srgb, var(--c) 9%, transparent); border-radius: 0 10px 10px 0; padding: 12px 16px; display: grid; gap: 2px; }
 .selhead h3 { font-family: var(--f-display); font-size: 20px; margin: 0; color: var(--ink); text-wrap: balance; }
@@ -132,7 +141,11 @@ footer { color: var(--muted); font-size: 12.5px; max-width: 80ch; }
 
   <div class="shapebar">
     <p class="samenote">The three layouts below all show the same numbers. They are three ways of looking at one set of data, so pick whichever reads best.</p>
-    <span>Ramp shape for the free-month offers</span><div class="tabs" id="shape"></div>
+    <div class="shapepick">
+      <span class="shapelabel">Choose the ramp shape for the 8, 12 and 18 Months Free offers ▸</span>
+      <div class="tabs" id="shape"></div>
+    </div>
+    <p class="shapehelp"><b>Straight-line:</b> rent goes up by the same dollar amount every year. <b>Blended:</b> bigger increases early, easing off so sales only need to grow 5% by 2034. Every table and chart below changes when you switch.</p>
   </div>
 
   <!-- Layout 1 -->
