@@ -16,19 +16,19 @@
   --accent: #2456b8;
   --c-lease: #4a5468; --c-robert: #d4622a; --c-ramp: #2456b8; --c-o1: #138a7e; --c-o2: #8a52c4;
   --good: #1d8a4f; --good-bg: #e3f4ea; --bad: #c2412d; --bad-bg: #fbe8e4;
-  --path: #9aa3b5; --c-eight: #b8336f; --c-eighteen: #3f7d1a;
+  --path: #9aa3b5; --c-eight: #b8336f; --c-eighteen: #3f7d1a; --c-twentyfour: #9a7400;
   --new-a: #fff3c4; --new-b: #ffffff; --new-ink: #8a5a00; --new-line: #f0c64a; --new-glow: rgba(240,198,74,.45);
   --f-display: "Fraunces", Georgia, serif; --f-body: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif; --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0f1420; --panel: #161d2c; --ink: #e8ecf4; --ink2: #b4bccb; --muted: #8a93a6; --line: #2a3346; --soft: #1d2638;
   --accent: #7aa6ff; --c-lease: #aab3c4; --c-robert: #f08a52; --c-ramp: #7aa6ff; --c-o1: #3cc2b3; --c-o2: #b88cf0;
-  --good: #5fd08f; --good-bg: #173326; --bad: #ff8a75; --bad-bg: #3a1f1b; --path: #6b7489; --c-eight: #f07ab0; --c-eighteen: #8fd05a;
+  --good: #5fd08f; --good-bg: #173326; --bad: #ff8a75; --bad-bg: #3a1f1b; --path: #6b7489; --c-eight: #f07ab0; --c-eighteen: #8fd05a; --c-twentyfour: #e3c04f;
   --new-a: #4a3a10; --new-b: #8a6f20; --new-ink: #ffe08a; --new-line: #c9a23a; --new-glow: rgba(255,214,102,.3); color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #0f1420; --panel: #161d2c; --ink: #e8ecf4; --ink2: #b4bccb; --muted: #8a93a6; --line: #2a3346; --soft: #1d2638;
   --accent: #7aa6ff; --c-lease: #aab3c4; --c-robert: #f08a52; --c-ramp: #7aa6ff; --c-o1: #3cc2b3; --c-o2: #b88cf0;
-  --good: #5fd08f; --good-bg: #173326; --bad: #ff8a75; --bad-bg: #3a1f1b; --path: #6b7489; --c-eight: #f07ab0; --c-eighteen: #8fd05a;
+  --good: #5fd08f; --good-bg: #173326; --bad: #ff8a75; --bad-bg: #3a1f1b; --path: #6b7489; --c-eight: #f07ab0; --c-eighteen: #8fd05a; --c-twentyfour: #e3c04f;
   --new-a: #4a3a10; --new-b: #8a6f20; --new-ink: #ffe08a; --new-line: #c9a23a; --new-glow: rgba(255,214,102,.3); color-scheme: dark }
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5;
@@ -135,17 +135,17 @@ footer { color: var(--muted); font-size: 12.5px; max-width: 80ch; }
       The new offers do that by moving rent later in the lease. His total stays close to the lease, and the relief comes up front where we need it.</p>
     <p class="lede"><b>The trade-off.</b> Rent moved later makes the long-term plan aggressive: sales have to keep climbing every year to carry it.
       We have done this before. Scotland Yard grew from 2006 onward, and Bar Cathedral has grown since 2022.</p>
-    <p class="lede">Seven rent schedules over the 9 lease years left, shown three ways. "Rent" here means base rent plus realty tax and OPEX ($28.84/SF, held flat).
+    <p class="lede">Eight rent schedules over the 9 lease years left, shown three ways. "Rent" here means base rent plus realty tax and OPEX ($28.84/SF, held flat).
       "Sales for 10%" is the sales Eloise needs for rent to be 10% of sales.</p>
   </header>
 
   <div class="shapebar">
     <p class="samenote">The three layouts below all show the same numbers. They are three ways of looking at one set of data, so pick whichever reads best.</p>
     <div class="shapepick">
-      <span class="shapelabel">Choose the ramp shape for the 8, 12 and 18 Months Free offers ▸</span>
+      <span class="shapelabel">Choose the ramp shape for the 8, 12, 18 and 24 Months Free offers ▸</span>
       <div class="tabs" id="shape"></div>
     </div>
-    <p class="shapehelp"><b>Straight-line:</b> rent goes up by the same dollar amount every year. <b>Blended:</b> bigger increases early, easing off so sales only need to grow 5% by 2034. Every table and chart below changes when you switch.</p>
+    <p class="shapehelp"><b>Straight-line:</b> rent goes up by the same dollar amount every year. <b>Blended:</b> bigger increases early, easing off so sales only need to grow 5% by 2034 (0% for 24 Months Free, whose rent levels off at the end). Every table and chart below changes when you switch.</p>
   </div>
 
   <!-- Layout 1 -->
@@ -181,10 +181,10 @@ footer { color: var(--muted); font-size: 12.5px; max-width: 80ch; }
     <div class="verdict" id="vd3"></div>
   </section>
 
-  <footer>Lease base rent from the lease schedule (5,652 SF). Robert's offer: 4 months of base rent free in 2026, priced at $47.03/SF. 8, 12 and 18 Months Free: $22.37/SF for 2 years, then a ramp so the 9-year base rent total is 8 months ($177,209), 12 months ($265,814)
-    or 18 months ($398,720) under the lease, priced at $47.03/SF. Straight-line ramp: the same $/SF added each year. Blended ramp: rent rises with sales growth that starts high in 2028
-    and eases evenly to 5% by 2034, with rent at 10% of sales. "Sales growth needed" compares each year's sales for 10% with the year before (2026 with today's $2.32M). Our Last Offer Options 1 and 2 are the two schedules in our proposal. Each rate starts in May of the year shown. NPV discounts each year's base rent at 8% (the landlord's rate in our model) to today; "total discount" is the amount off as a share of the lease.
-    Sales paths start from trailing-12 POS sales of $2,322,902 to 2026-10-24. Built 2026-11-06.</footer>
+  <footer>Lease base rent from the lease schedule (5,652 SF). Robert's offer: 4 months of base rent free in 2026, priced at $47.03/SF. 8, 12, 18 and 24 Months Free: $22.37/SF for 2 years, then a ramp so the 9-year base rent total is 8 months ($177,209), 12 months ($265,814),
+    18 months ($398,720) or 24 months ($531,627) under the lease, priced at $47.03/SF. Straight-line ramp: the same $/SF added each year. Blended ramp: rent rises with sales growth that starts high in 2028
+    and eases evenly to 5% by 2034, with rent at 10% of sales. 24 Months Free flattens the end of the term: on the straight-line ramp the May 2033 and May 2034 increases are removed and rent holds at its 2032 level; on the blended ramp sales growth eases to 0% by 2034. "Sales growth needed" compares each year's sales for 10% with the year before (2026 with today's $2.32M). Our Last Offer Options 1 and 2 are the two schedules in our proposal. Each rate starts in May of the year shown. NPV discounts each year's base rent at 8% (the landlord's rate in our model) to today; "total discount" is the amount off as a share of the lease.
+    Sales paths start from trailing-12 POS sales of $2,322,902 to 2026-10-24. Updated 2026-11-10.</footer>
 </div>
 
 <script>
@@ -193,14 +193,16 @@ const LEASE = [47.03,49.02,51.11,53.15,55.28,57.49,59.79,61.88,63.74];
 // "N months free": 2 years at our $22.37/SF, then a ramp so the 9-year base rent total = lease less N months at $47.03/SF.
 // Straight: the same $/SF added each year. Blended: rent follows sales growth that starts high and tapers to G_END by 2034.
 const T_LEASE = LEASE.reduce((a, b) => a + b, 0) * SF, MONTH = 47.03 * SF / 12, START = 22.37, G_END = 0.05;
-const straight = m => {
-  const k = ((T_LEASE - m * MONTH) / SF - 9 * START) / 28;
-  return { k, psf: [START, START, ...[1,2,3,4,5,6,7].map(i => START + k * i)] };
+// flat = how many of the final years hold at the previous year's rate instead of rising (0 = a straight ramp to 2034).
+const straight = (m, flat = 0) => {
+  const steps = [1,2,3,4,5,6,7].map(i => Math.min(i, 7 - flat));
+  const k = ((T_LEASE - m * MONTH) / SF - 9 * START) / steps.reduce((a, b) => a + b, 0);
+  return { k, psf: [START, START, ...steps.map(i => START + k * i)] };
 };
-const blended = m => {
+const blended = (m, gEnd = G_END) => {
   const target = T_LEASE - m * MONTH, b1 = START * SF, s1 = (b1 + ADD) / 0.10;
   const run = ga => { let s = s1; const base = [b1, b1];
-    for (let t = 2; t < 9; t++) { s *= 1 + ga + (G_END - ga) * (t - 2) / 6; base.push(0.10 * s - ADD); }
+    for (let t = 2; t < 9; t++) { s *= 1 + ga + (gEnd - ga) * (t - 2) / 6; base.push(0.10 * s - ADD); }
     return base; };
   let lo = -0.5, hi = 1.5;
   for (let n = 0; n < 100; n++) { const mid = (lo + hi) / 2; run(mid).reduce((a, b) => a + b, 0) < target ? lo = mid : hi = mid; }
@@ -208,16 +210,19 @@ const blended = m => {
 };
 const FREE = [
   { id: "eight", m: 8, c: "--c-eight" }, { id: "ramp", m: 12, c: "--c-ramp" }, { id: "eighteen", m: 18, c: "--c-eighteen" },
+  { id: "twentyfour", m: 24, c: "--c-twentyfour", flat: 2, gEnd: 0 },
 ];
 let SHAPE = (() => { try { return localStorage.getItem("rent-shape") || "straight"; } catch { return "straight"; } })();
 const freeOpt = f => {
   const name = `${f.m} Months Free`, tail = `The 9-year total is the lease less ${f.m} months of base rent.`;
   if (SHAPE === "blended") {
-    const r = blended(f.m);
+    const gEnd = f.gEnd ?? G_END, r = blended(f.m, gEnd);
     return { id: f.id, name, short: name, c: f.c, psf: r.psf, isNew: true, title: `${name}: 2 years flat, then a climb that eases off`,
-      desc: `$22.37/SF for 2026 and 2027. From 2028 rent tracks sales growth of ${(r.ga * 100).toFixed(1)}%, easing each year to ${(G_END * 100).toFixed(0)}% by 2034. ${tail}` };
+      desc: `$22.37/SF for 2026 and 2027. From 2028 rent tracks sales growth of ${(r.ga * 100).toFixed(1)}%, easing each year to ${(gEnd * 100).toFixed(0)}% by 2034. ${tail}` };
   }
-  const r = straight(f.m);
+  const r = straight(f.m, f.flat);
+  if (f.flat) return { id: f.id, name, short: name, c: f.c, psf: r.psf, isNew: true, title: `${name}: 2 years flat, a steady climb, then level at the end`,
+    desc: `$22.37/SF for 2026 and 2027, then +$${r.k.toFixed(2)}/SF every year to 2032, then flat at $${r.psf[8].toFixed(2)}/SF through 2034. ${tail}` };
   return { id: f.id, name, short: name, c: f.c, psf: r.psf, isNew: true, title: `${name}: 2 years flat, then a steady climb`,
     desc: `$22.37/SF for 2026 and 2027, then +$${r.k.toFixed(2)}/SF every year. ${tail}` };
 };
@@ -263,7 +268,7 @@ const money = (v, d = 0) => "$" + v.toLocaleString("en-CA", { maximumFractionDig
 const K$ = v => "$" + (v / 1000).toFixed(1) + "K";
 const M$ = v => "$" + (v / 1e6).toFixed(2) + "M";
 const PSF = v => "$" + v.toFixed(2);
-const PCT = v => (v >= 0 ? "+" : "−") + Math.abs(v * 100).toFixed(1) + "%";
+const PCT = v => (v > -0.0005 ? "+" : "−") + Math.abs(v * 100).toFixed(1) + "%";
 const store = { get(k, d) { try { return localStorage.getItem(k) ?? d; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
 
 // facts strip
