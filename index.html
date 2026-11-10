@@ -142,10 +142,10 @@ footer { color: var(--muted); font-size: 12.5px; max-width: 80ch; }
   <div class="shapebar">
     <p class="samenote">The three layouts below all show the same numbers. They are three ways of looking at one set of data, so pick whichever reads best.</p>
     <div class="shapepick">
-      <span class="shapelabel">Choose the ramp shape for the 8, 12, 18 and 24 Months Free offers ▸</span>
+      <span class="shapelabel">Choose the ramp shape for the 8, 12 and 18 Months Free offers ▸</span>
       <div class="tabs" id="shape"></div>
     </div>
-    <p class="shapehelp"><b>Straight-line:</b> rent goes up by the same dollar amount every year. <b>Blended:</b> bigger increases early, easing off so sales only need to grow 5% by 2034 (under 1% for 24 Months Free, whose rent levels off and finishes on the lease rate). Every table and chart below changes when you switch.</p>
+    <p class="shapehelp"><b>Straight-line:</b> rent goes up by the same dollar amount every year. <b>Blended:</b> bigger increases early, easing off so sales only need to grow 5% by 2034. Every table and chart below changes when you switch. 24 Months Free always uses one smooth ramp, so this switch does not change it.</p>
   </div>
 
   <!-- Layout 1 -->
@@ -181,9 +181,9 @@ footer { color: var(--muted); font-size: 12.5px; max-width: 80ch; }
     <div class="verdict" id="vd3"></div>
   </section>
 
-  <footer>Lease base rent from the lease schedule (5,652 SF). Robert's offer: 4 months of base rent free in 2026, priced at $47.03/SF. 8, 12, 18 and 24 Months Free: $22.37/SF for 2 years, then a ramp so the 9-year base rent total is 8 months ($177,209), 12 months ($265,814),
-    18 months ($398,720) or 24 months ($531,627) under the lease, priced at $47.03/SF. Straight-line ramp: the same $/SF added each year. Blended ramp: rent rises with sales growth that starts high in 2028
-    and eases evenly to 5% by 2034, with rent at 10% of sales. 24 Months Free flattens the end of the term: on the straight-line ramp rent rises only $0.75/SF in each of May 2033 and May 2034 to finish on the lease's $63.74/SF; on the blended ramp sales growth eases to under 1% by 2034 and also finishes at $63.74/SF. "Sales growth needed" compares each year's sales for 10% with the year before (2026 with today's $2.32M). Our Last Offer Options 1 and 2 are the two schedules in our proposal. Each rate starts in May of the year shown. NPV discounts each year's base rent at 8% (the landlord's rate in our model) to today; "total discount" is the amount off as a share of the lease.
+  <footer>Lease base rent from the lease schedule (5,652 SF). Robert's offer: 4 months of base rent free in 2026, priced at $47.03/SF. 8, 12 and 18 Months Free: $22.37/SF for 2 years, then a ramp so the 9-year base rent total is 8 months ($177,209), 12 months ($265,814)
+    or 18 months ($398,720) under the lease, priced at $47.03/SF. Straight-line ramp: the same $/SF added each year. Blended ramp: rent rises with sales growth that starts high in 2028
+    and eases evenly to 5% by 2034, with rent at 10% of sales. 24 Months Free: the 9-year base rent total is 24 months ($531,627) under the lease, with rent at 10% of sales and sales growth falling in one straight line from 2026 to 2034, finishing on the lease's $63.74/SF. "Sales growth needed" compares each year's sales for 10% with the year before (2026 with today's $2.32M). Our Last Offer Options 1 and 2 are the two schedules in our proposal. Each rate starts in May of the year shown. NPV discounts each year's base rent at 8% (the landlord's rate in our model) to today; "total discount" is the amount off as a share of the lease.
     Sales paths start from trailing-12 POS sales of $2,322,902 to 2026-10-24. Updated 2026-11-10.</footer>
 </div>
 
@@ -193,45 +193,48 @@ const LEASE = [47.03,49.02,51.11,53.15,55.28,57.49,59.79,61.88,63.74];
 // "N months free": 2 years at our $22.37/SF, then a ramp so the 9-year base rent total = lease less N months at $47.03/SF.
 // Straight: the same $/SF added each year. Blended: rent follows sales growth that starts high and tapers to G_END by 2034.
 const T_LEASE = LEASE.reduce((a, b) => a + b, 0) * SF, MONTH = 47.03 * SF / 12, START = 22.37, G_END = 0.05;
-// flat = how many of the final years hold at the previous year's rate instead of rising (0 = a straight ramp to 2034).
-// land = finish on the lease's 2034 rate; the same amount comes off 2032, so the 9-year total does not change.
-const straight = (m, flat = 0, land = false) => {
-  const steps = [1,2,3,4,5,6,7].map(i => Math.min(i, 7 - flat));
-  const k = ((T_LEASE - m * MONTH) / SF - 9 * START) / steps.reduce((a, b) => a + b, 0);
-  const psf = [START, START, ...steps.map(i => START + k * i)];
-  if (land) { const d = LEASE[8] - psf[8]; psf[6] -= d; psf[8] += d; }
-  return { k, psf };
+const straight = m => {
+  const k = ((T_LEASE - m * MONTH) / SF - 9 * START) / 28;
+  return { k, psf: [START, START, ...[1,2,3,4,5,6,7].map(i => START + k * i)] };
 };
-const blended = (m, gEnd = G_END) => {
+const blended = m => {
   const target = T_LEASE - m * MONTH, b1 = START * SF, s1 = (b1 + ADD) / 0.10;
   const run = ga => { let s = s1; const base = [b1, b1];
-    for (let t = 2; t < 9; t++) { s *= 1 + ga + (gEnd - ga) * (t - 2) / 6; base.push(0.10 * s - ADD); }
+    for (let t = 2; t < 9; t++) { s *= 1 + ga + (G_END - ga) * (t - 2) / 6; base.push(0.10 * s - ADD); }
     return base; };
   let lo = -0.5, hi = 1.5;
   for (let n = 0; n < 100; n++) { const mid = (lo + hi) / 2; run(mid).reduce((a, b) => a + b, 0) < target ? lo = mid : hi = mid; }
-  return { ga: lo, gEnd, psf: run(lo).map(b => b / SF) };
+  return { ga: lo, psf: run(lo).map(b => b / SF) };
 };
-// Blended ramp that finishes on the lease's 2034 rate: solve the ending growth too.
-const blendedLand = m => {
-  let lo = -0.1, hi = 0.1;
-  for (let n = 0; n < 100; n++) { const mid = (lo + hi) / 2; blended(m, mid).psf[8] < LEASE[8] ? lo = mid : hi = mid; }
-  return blended(m, lo);
+// Smooth ramp: rent is 10% of sales and sales growth falls in one straight line from today's sales in 2026 to 2034.
+// Start and end growth are solved so the 9-year total = lease less N months and 2034 lands on the lease rate.
+const smoothRamp = m => {
+  const NOW = 2322902, targetSales = (T_LEASE - m * MONTH + 9 * ADD) / 0.10, endSales = (LEASE[8] * SF + ADD) / 0.10;
+  const run = (g, e) => { let s = NOW; return YEARS.map((_, t) => (s *= 1 + g + (e - g) * t / 8)); };
+  const fit = e => { let lo = -0.5, hi = 1; for (let n = 0; n < 100; n++) { const mid = (lo + hi) / 2; run(mid, e)[8] < endSales ? lo = mid : hi = mid; } return lo; };
+  let lo = -0.3, hi = 0.3;
+  for (let n = 0; n < 100; n++) { const e = (lo + hi) / 2; run(fit(e), e).reduce((a, b) => a + b, 0) > targetSales ? lo = e : hi = e; }
+  const ga = fit(lo);
+  return { ga, gEnd: lo, psf: run(ga, lo).map(v => (0.10 * v - ADD) / SF) };
 };
 const FREE = [
   { id: "eight", m: 8, c: "--c-eight" }, { id: "ramp", m: 12, c: "--c-ramp" }, { id: "eighteen", m: 18, c: "--c-eighteen" },
-  { id: "twentyfour", m: 24, c: "--c-twentyfour", flat: 2, land: true },
+  { id: "twentyfour", m: 24, c: "--c-twentyfour", smooth: true },
 ];
 let SHAPE = (() => { try { return localStorage.getItem("rent-shape") || "straight"; } catch { return "straight"; } })();
 const freeOpt = f => {
   const name = `${f.m} Months Free`, tail = `The 9-year total is the lease less ${f.m} months of base rent.`;
-  if (SHAPE === "blended") {
-    const r = f.land ? blendedLand(f.m) : blended(f.m), gEnd = r.gEnd;
-    return { id: f.id, name, short: name, c: f.c, psf: r.psf, isNew: true, title: `${name}: 2 years flat, then a climb that eases off`,
-      desc: `$22.37/SF for 2026 and 2027. From 2028 rent tracks sales growth of ${(r.ga * 100).toFixed(1)}%, easing each year to ${(gEnd * 100).toFixed(f.land ? 1 : 0)}% by 2034${f.land ? `, finishing on the lease's $${LEASE[8].toFixed(2)}/SF` : ""}. ${tail}` };
+  if (f.smooth) {
+    const r = smoothRamp(f.m), pct = v => (v * 100).toFixed(1) + "%";
+    return { id: f.id, name, short: name, c: f.c, psf: r.psf, isNew: true, title: `${name}: sales grow every year on one smooth ramp`,
+      desc: `Rent starts at $${r.psf[0].toFixed(2)}/SF in 2026 and $${r.psf[1].toFixed(2)} in 2027, then follows sales growth of ${pct(r.ga)} in 2026, easing by the same step each year to ${pct(r.gEnd)} in 2034 and finishing on the lease's $${LEASE[8].toFixed(2)}/SF. ${tail}` };
   }
-  const r = straight(f.m, f.flat, f.land);
-  if (f.flat) return { id: f.id, name, short: name, c: f.c, psf: r.psf, isNew: true, title: `${name}: 2 years flat, a steady climb, then level into the lease rate`,
-    desc: `$22.37/SF for 2026 and 2027, then +$${r.k.toFixed(2)}/SF every year to 2031, then $${r.psf[6].toFixed(2)} in 2032, $${r.psf[7].toFixed(2)} in 2033 and $${r.psf[8].toFixed(2)}/SF in 2034, the lease's own final rate. ${tail}` };
+  if (SHAPE === "blended") {
+    const r = blended(f.m);
+    return { id: f.id, name, short: name, c: f.c, psf: r.psf, isNew: true, title: `${name}: 2 years flat, then a climb that eases off`,
+      desc: `$22.37/SF for 2026 and 2027. From 2028 rent tracks sales growth of ${(r.ga * 100).toFixed(1)}%, easing each year to ${(G_END * 100).toFixed(0)}% by 2034. ${tail}` };
+  }
+  const r = straight(f.m);
   return { id: f.id, name, short: name, c: f.c, psf: r.psf, isNew: true, title: `${name}: 2 years flat, then a steady climb`,
     desc: `$22.37/SF for 2026 and 2027, then +$${r.k.toFixed(2)}/SF every year. ${tail}` };
 };
